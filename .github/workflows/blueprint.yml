@@ -60,3 +60,6 @@ jobs:
         with:
           blueprint: true
           homepage: home_page
+          # The leanblueprint home page template locks gems (github-pages 226, nokogiri 1.13)
+          # that need Ruby < 3.2; docgen-action now defaults to 3.4. Tested on ubuntu-24.04.
+          ruby-version: "3.1"
