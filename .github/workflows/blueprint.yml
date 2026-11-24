@@ -47,6 +47,12 @@ jobs:
           lint: true
           mk_all-check: true
 
+      # Statlib commits docbuild/lake-manifest.json with an old doc-gen4 pin. docgen-action only
+      # runs `lake update Statlib` there, so that stale doc-gen4 would be built and fail. Removing
+      # the manifest (in CI only) lets docgen-action pick the doc-gen4 tag matching lean-toolchain.
+      - name: Use a fresh doc-gen4 for the API docs
+        run: rm -f docbuild/lake-manifest.json
+
       - name: Compile blueprint and documentation
         uses: leanprover-community/docgen-action@deed0cdc44dd8e5de07a300773eb751d33e32fc8 # 2025-10-26
         with:
