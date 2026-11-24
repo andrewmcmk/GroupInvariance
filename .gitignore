@@ -231,3 +231,9 @@ _out/
 # Generated published output belongs in stat-lib.github.io.
 docs/
 tutorial/
+
+# Blueprint build output
+blueprint/print/
+blueprint/web/
+blueprint/src/web.paux
+blueprint/lean_decls

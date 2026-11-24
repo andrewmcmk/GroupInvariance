@@ -1,5 +1,18 @@
 # Statlib
 
+> **About this fork.** This is Andrew McCormack's fork of [stat-lib/statlib](https://github.com/stat-lib/statlib),
+> used to develop a formalization of *group transformation families* in statistics, organized as a
+> [Lean blueprint](https://github.com/PatrickMassot/leanblueprint).
+>
+> - Lean code: `Statlib/Invariance/`
+> - Blueprint: `blueprint/src/content.tex` (build with `leanblueprint web` / `leanblueprint pdf`,
+>   check names with `leanblueprint checkdecls`)
+> - Fork-only infrastructure (not intended for upstream PRs): `blueprint/`, `home_page/`,
+>   `.github/workflows/blueprint.yml`, `scripts/CheckDecls.lean` and the `checkdecls` executable in
+>   `lakefile.toml`.
+>
+> To contribute to upstream, branch from `upstream/main` and include only the Lean files.
+
 [![Build and lint](https://github.com/stat-lib/statlib/actions/workflows/ci.yml/badge.svg)](https://github.com/stat-lib/statlib/actions/workflows/ci.yml)
 [![Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 

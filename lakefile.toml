@@ -22,3 +22,12 @@ rev = "main"
 
 [[lean_lib]]
 name = "Statlib"
+
+# Fork-only: used by `leanblueprint checkdecls` (and the blueprint CI) to check that every
+# \lean{...} name in the blueprint exists. Replaces the PatrickMassot/checkdecls package, which
+# fails on recent Lean versions.
+[[lean_exe]]
+name = "checkdecls"
+root = "CheckDecls"
+srcDir = "scripts"
+supportInterpreter = true

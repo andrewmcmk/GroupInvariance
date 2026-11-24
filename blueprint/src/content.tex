@@ -1,0 +1,106 @@
+% In this file you should put the actual content of the blueprint.
+% It will be used both by the web and the print version.
+% It should *not* include the \begin{document}
+%
+% If you want to split the blueprint content into several files then
+% the current file can be a simple sequence of \input. Otherwise It
+% can start with a \section or \chapter for instance.
+
+\chapter{Group transformation families}
+
+Throughout, $G$ is a group acting on a measurable space $\Omega$ (the sample space)
+and on a set $\Theta$ (the parameter space). We write $g x$ and $g \theta$ for
+the actions, and $g_* \mu$ for the pushforward of a measure $\mu$ on $\Omega$
+along $x \mapsto g x$.
+
+\section{Definitions}
+
+\begin{definition}[Group transformation family]
+  \label{def:equivariant-family}
+  \lean{ProbabilityTheory.IsEquivariantFamily}
+  \leanok
+  A family of measures $(P_\theta)_{\theta \in \Theta}$ on $\Omega$ is a
+  \emph{group transformation family} for $G$ if
+  \[ P_{g\theta} = g_* P_\theta \qquad \text{for all } g \in G,\ \theta \in \Theta, \]
+  that is, $P_{g\theta}(A) = P_\theta(g^{-1}A)$ for every measurable $A \subseteq \Omega$.
+\end{definition}
+
+\begin{definition}[Invariant statistic]
+  \label{def:invariant-statistic}
+  \lean{ProbabilityTheory.IsInvariantStatistic}
+  \leanok
+  A statistic $T : \Omega \to \mathcal{T}$ is \emph{$G$-invariant} if
+  $T(gx) = T(x)$ for all $g \in G$ and $x \in \Omega$.
+\end{definition}
+
+\begin{definition}[Maximal invariant]
+  \label{def:maximal-invariant}
+  \uses{def:invariant-statistic}
+  An invariant statistic $T$ is a \emph{maximal invariant} if $T(x) = T(y)$ implies
+  $y = gx$ for some $g \in G$; that is, $T$ separates the orbits of $G$ on $\Omega$.
+\end{definition}
+
+\begin{definition}[Equivariant estimator]
+  \label{def:equivariant-estimator}
+  An estimator $\delta : \Omega \to \Theta$ is \emph{equivariant} if
+  $\delta(gx) = g\,\delta(x)$ for all $g \in G$ and $x \in \Omega$.
+\end{definition}
+
+\begin{definition}[Invariant loss]
+  \label{def:invariant-loss}
+  A loss function $L : \Theta \times \Theta \to [0, \infty]$ is \emph{invariant} if
+  $L(g\theta, gd) = L(\theta, d)$ for all $g \in G$ and $\theta, d \in \Theta$.
+\end{definition}
+
+\section{Basic results}
+
+\begin{lemma}[Invariant statistics have orbit-constant laws]
+  \label{lem:invariant-law}
+  \lean{ProbabilityTheory.IsEquivariantFamily.map_invariant}
+  \leanok
+  \uses{def:equivariant-family, def:invariant-statistic}
+  Let $(P_\theta)$ be a group transformation family and $T$ a measurable invariant
+  statistic, and suppose the action of $G$ on $\Omega$ is measurable. Then for all
+  $g \in G$ and $\theta \in \Theta$,
+  \[ T_* P_{g\theta} = T_* P_\theta. \]
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  We have $T_* P_{g\theta} = T_* (g_* P_\theta) = (T \circ g)_* P_\theta = T_* P_\theta$,
+  where the last step uses $T \circ g = T$.
+\end{proof}
+
+\begin{corollary}[Invariant statistics are ancillary under transitive actions]
+  \label{cor:ancillary}
+  \uses{lem:invariant-law}
+  If, in addition, $G$ acts transitively on $\Theta$, then the distribution of every
+  measurable invariant statistic does not depend on $\theta$; that is, $T$ is ancillary.
+\end{corollary}
+
+\begin{proof}
+  \uses{lem:invariant-law}
+  Given $\theta, \theta' \in \Theta$, choose $g$ with $\theta' = g\theta$ and apply
+  Lemma~\ref{lem:invariant-law}.
+\end{proof}
+
+\begin{theorem}[Risk of equivariant estimators]
+  \label{thm:constant-risk}
+  \uses{def:equivariant-family, def:equivariant-estimator, def:invariant-loss}
+  Let $(P_\theta)$ be a group transformation family, $L$ an invariant loss and $\delta$
+  a measurable equivariant estimator. Then the risk
+  $R(\theta, \delta) = \int L(\theta, \delta(x))\, dP_\theta(x)$ satisfies
+  $R(g\theta, \delta) = R(\theta, \delta)$ for all $g$ and $\theta$. In particular, if
+  $G$ acts transitively on $\Theta$, the risk of $\delta$ is constant.
+\end{theorem}
+
+\begin{proof}
+  By the change of variables formula for pushforward measures,
+  \begin{align*}
+    R(g\theta, \delta)
+      &= \int L(g\theta, \delta(x))\, d(g_* P_\theta)(x)
+       = \int L(g\theta, \delta(gx))\, dP_\theta(x) \\
+      &= \int L(g\theta, g\,\delta(x))\, dP_\theta(x)
+       = \int L(\theta, \delta(x))\, dP_\theta(x). \qedhere
+  \end{align*}
+\end{proof}
