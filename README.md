@@ -1,56 +1,42 @@
-# Statlib
+# Group Transformation Families in Statistics
 
-> **About this fork.** This is Andrew McCormack's fork of [stat-lib/statlib](https://github.com/stat-lib/statlib),
-> used to develop a formalization of *group transformation families* in statistics, organized as a
-> [Lean blueprint](https://github.com/PatrickMassot/leanblueprint).
->
-> - Lean code: `Statlib/Invariance/`
-> - Blueprint: `blueprint/src/content.tex` (build with `leanblueprint web` / `leanblueprint pdf`,
->   check names with `leanblueprint checkdecls`)
-> - Fork-only infrastructure (not intended for upstream PRs): `blueprint/`, `home_page/`,
->   `.github/workflows/blueprint.yml`, `scripts/CheckDecls.lean` and the `checkdecls` executable in
->   `lakefile.toml`.
->
-> To contribute to upstream, branch from `upstream/main` and include only the Lean files.
+A Lean 4 formalization of group transformation families (group-equivariant statistical models) and
+group invariance in statistics, organized as a [Lean blueprint](https://github.com/PatrickMassot/leanblueprint).
 
-[![Build and lint](https://github.com/stat-lib/statlib/actions/workflows/ci.yml/badge.svg)](https://github.com/stat-lib/statlib/actions/workflows/ci.yml)
-[![Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+- [Project website](https://andrewmcmk.github.io/GroupInvariance/)
+- [Blueprint](https://andrewmcmk.github.io/GroupInvariance/blueprint/) ·
+  [PDF](https://andrewmcmk.github.io/GroupInvariance/blueprint.pdf) ·
+  [Dependency graph](https://andrewmcmk.github.io/GroupInvariance/blueprint/dep_graph_document.html)
+- [API documentation](https://andrewmcmk.github.io/GroupInvariance/docs/)
 
+## Relationship to Statlib
 
-Statlib is an open community that aims to support the verification of classical, contemporary, and emerging research in mathematical statistics; its vision and goals are shaped by the whole community. We build with [Institute for Computer-Aided Reasoning in Mathematics (ICARM)](https://icarm.io/) at CMU. 
+This project is developed on top of [Statlib](https://github.com/stat-lib/statlib), a community
+library for formalizing mathematical statistics, and this repository is a GitHub fork of it. The
+Statlib library code is included unchanged. This project adds:
 
-[Website](https://stat-lib.github.io/) ·
-[Tutorial](https://stat-lib.github.io/tutorial/) ·
-[API documentation](https://stat-lib.github.io/docs/) ·
-[Roadmap](https://stat-lib.github.io/roadmap.html) ·
-[Contributing guide](https://stat-lib.github.io/contribute.html) ·
-[Zulip](https://leanprover.zulipchat.com/#narrow/channel/611809-Statlib)
+- Lean code in `Statlib/Invariance/`
+- the blueprint (`blueprint/`), the project website (`home_page/`), and the blueprint CI workflow
+  (`.github/workflows/blueprint.yml`)
+- `scripts/CheckDecls.lean` and the `checkdecls` executable in `lakefile.toml`, used by
+  `leanblueprint checkdecls`
 
-## Design before code
+Statlib is released under the Apache License 2.0 (see `LICENSE`).
 
-A coherent library is more than a collection of independently formalized results. Definitions and
-theorem statements establish vocabulary and conventions that later code will depend on. Choices
-such as names, namespaces, representations, parameter order, typeclass assumptions, and boundary
-behavior should be discussed.
+## Building
 
-For a substantial new formalization or API, our workflow is:
+```sh
+lake exe cache get                  # download prebuilt Mathlib
+LEAN_NUM_THREADS=4 lake build       # build (limit parallel jobs on machines with 16 GB RAM)
 
-1. **Open an issue.** 
-2. **Discuss the design specification in the issue.** 
-3. **Implement with/after the design direction is clear.** 
-4. **Open a pull request linked to the issue.** 
+leanblueprint web         # blueprint/web/index.html (+ dep_graph_document.html)
+leanblueprint pdf         # blueprint/print/print.pdf
+leanblueprint checkdecls  # check every \lean{...} name exists (run after lake build)
+leanblueprint serve       # preview the web version at http://localhost:8000
+```
 
-You may find a proposed (not mandetary) form in [design document template](roadmap/README.md). Small fixes, documentation improvements, and narrowly scoped lemmas do not need a full design document. 
+## Blueprint conventions
 
-Not sure what to do? You may also find a list of todo [here](https://stat-lib.github.io/todos.html) 
-
-Any question? Please comment in [Statlib Zulip channel](https://leanprover.zulipchat.com/#narrow/channel/611809-Statlib).
-
-## Using AI
-
-We understand people have different opinions of AI. Feel free to use AI effectively, but remember that the goal is to make things readable and clear for human to engage with the materials.
-
-
-## License
-
-Statlib is released under the [Apache License 2.0](LICENSE).
+- `\lean{Name}`: the Lean declaration(s) formalizing a statement.
+- `\leanok` in a statement: the Lean statement exists. `\leanok` in a proof: it is fully proved.
+- `\uses{label, ...}`: dependencies (drawn as edges in the dependency graph).

@@ -22,10 +22,10 @@ title: Group Transformation Families in Statistics
 #email: your-email@example.com
 description: by Andrew McCormack
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://andrewmcmk.github.io/statlib" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://andrewmcmk.github.io/GroupInvariance" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:
 github_username: andrewmcmk
-repository: andrewmcmk/statlib
+repository: andrewmcmk/GroupInvariance
 
 # Build settings
 remote_theme: pages-themes/cayman@v0.2.0 
