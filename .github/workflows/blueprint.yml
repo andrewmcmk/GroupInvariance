@@ -21,7 +21,9 @@ permissions:
 
 jobs:
   build_project:
-    runs-on: ubuntu-latest
+    # ubuntu-24.04, not ubuntu-latest (26.04): the setup-ruby pinned inside docgen-action does not
+    # recognize the 26.04 image, which breaks the home page (Jekyll) build.
+    runs-on: ubuntu-24.04
     name: Build project
     steps:
       - name: Cleanup to free disk space
@@ -54,7 +56,7 @@ jobs:
         run: rm -f docbuild/lake-manifest.json
 
       - name: Compile blueprint and documentation
-        uses: leanprover-community/docgen-action@deed0cdc44dd8e5de07a300773eb751d33e32fc8 # 2025-10-26
+        uses: leanprover-community/docgen-action@dacc1acc2a3f532cc577266979ba9c36c7593f7c # 2026-10-05
         with:
           blueprint: true
           homepage: home_page
