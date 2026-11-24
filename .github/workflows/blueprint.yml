@@ -63,3 +63,28 @@ jobs:
           # The leanblueprint home page template locks gems (github-pages 226, nokogiri 1.13)
           # that need Ruby < 3.2; docgen-action now defaults to 3.4. Tested on ubuntu-24.04.
           ruby-version: "3.1"
+          # Deploy in the separate `deploy` job below instead: deploying in the same job right after
+          # the upload intermittently fails with `No artifacts named "github-pages" were found`
+          # (actions/deploy-pages#451, leanprover-community/docgen-action#43).
+          deploy: false
+
+      # Only on push, like docgen-action: it builds the API docs only for push events, so a manual
+      # run would publish a site without /docs. Manual runs are therefore dry runs.
+      - name: Upload website (home page, blueprint and API documentation)
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: home_page/_site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push'
+    needs: build_project
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
